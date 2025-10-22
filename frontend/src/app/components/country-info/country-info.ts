@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Country} from '../../services/country';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -18,7 +18,7 @@ export class CountryInfo {
   holidays: any[] = [];
   year: number = 2025;
 
-  constructor(private route: ActivatedRoute, private countryService: Country) {}
+  constructor(private route: ActivatedRoute, private router: Router, private countryService: Country) {}
 
   ngOnInit(){
     const code = this.route.snapshot.paramMap.get('code') || "";
@@ -31,5 +31,7 @@ export class CountryInfo {
     })
   }
 
-
+  goToCountry(code: string) {
+    this.router.navigate(['/country', code]);
+  }
 }

@@ -1,6 +1,5 @@
 <mat-card class="country-card" *ngIf="country">
   <mat-card-header>
-    <mat-icon mat-card-avatar>public</mat-icon>
     <mat-card-title>{{ country.commonName }}</mat-card-title>
     <mat-card-subtitle>{{ country.officialName }}</mat-card-subtitle>
   </mat-card-header>
@@ -13,7 +12,7 @@
 
     <h3>Bordering Countries</h3>
     <mat-chip-listbox aria-label="Borders" class="border-chips">
-      <mat-chip *ngFor="let border of country.borders" color="primary" selected>
+      <mat-chip *ngFor="let border of country.borders" color="primary" selected (click)="goToCountry(border.countryCode)">
         {{ border.commonName }} ({{ border.countryCode }})
       </mat-chip>
     </mat-chip-listbox>
