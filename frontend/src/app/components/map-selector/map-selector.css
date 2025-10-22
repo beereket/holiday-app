@@ -1,0 +1,9 @@
+.country-table {
+  margin-top: 20px;
+  border-radius: 10px;
+}
+.country-table table {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}

@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {MapSelector} from './components/map-selector/map-selector';
 import {MapsModule, MapsTooltipService} from '@syncfusion/ej2-angular-maps';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MapsModule, MapSelector],
+  imports: [CommonModule, RouterOutlet, MapsModule],
   templateUrl: './app.html',
   providers: [MapsTooltipService],
   styleUrl: './app.css'
