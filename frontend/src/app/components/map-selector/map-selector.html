@@ -1,6 +1,7 @@
 <ejs-maps id="map"
           [layers]="layerOptions"
           theme="FluentDark"
+          (shapeSelected)="onShapeSelected($event)"
 ></ejs-maps>
 
 <div class="country-table">

@@ -1,4 +1,14 @@
-<div class="country-list" *ngIf="countries">
+<div class="search-container">
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search countries</mat-label>
+    <input matInput
+           [formControl]="searchControl"
+           placeholder="Type to search..."
+           autocomplete="off">
+  </mat-form-field>
+</div>
+
+<div class="country-list" *ngIf="filteredCountries$ | async as countries">
   <div class="country-cards-container" *ngFor="let country of countries">
     <app-country-card [countryCode]="country.countryCode"></app-country-card>
   </div>

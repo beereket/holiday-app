@@ -10,7 +10,7 @@ export class Country {
 
   constructor(private http: HttpClient) {}
 
-  getCountries(): Observable<any[]> {
+  getCountries( ): Observable<any[]> {
     return this.http.get<any[]>(`${this.url}/AvailableCountries`);
   }
   getCountryInfo(code: string): Observable<any> {

@@ -7,3 +7,15 @@
   border: 1px solid #ccc;
   border-radius: 10px;
 }
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+::ng-deep #map svg path {
+  cursor: pointer;
+}
