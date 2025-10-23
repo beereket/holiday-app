@@ -1,3 +1,13 @@
-.container {
-  padding: 20px;
+.wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+router-outlet + * {
+  flex-grow: 1;
 }

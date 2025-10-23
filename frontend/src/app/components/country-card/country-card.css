@@ -1,0 +1,10 @@
+.country-card {
+  width: 400px;
+  min-height: 400px;
+
+}
+
+.card-actions {
+  margin-top: auto;
+  padding: 16px;
+}

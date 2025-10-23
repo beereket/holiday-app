@@ -6,10 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import {CountryCard} from '../country-card/country-card';
 
 @Component({
   selector: 'app-country-info',
-  imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule, MatDividerModule],
+  imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule, MatDividerModule, CountryCard],
   templateUrl: './country-info.html',
   styleUrl: './country-info.css'
 })

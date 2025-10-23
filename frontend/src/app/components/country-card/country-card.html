@@ -1,0 +1,27 @@
+<mat-card class="country-card" appearance="outlined" *ngIf="country">
+  <mat-card-header>
+    <img mat-card-avatar
+         [src]="'https://flagcdn.com/w160/' + (country.countryCode | lowercase) + '.png'"
+         alt="{{ country.commonName }}">
+    <mat-card-title>{{ country.commonName }}</mat-card-title>
+    <mat-card-subtitle>{{ country.officialName }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-divider class="divider"></mat-divider>
+
+    <p><strong>Country Code:</strong> {{ country.countryCode }}</p>
+    <p><strong>Region:</strong> {{ country.region }}</p>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <h3>Bordering Countries</h3>
+    <mat-chip-listbox aria-label="Borders" class="border-chips">
+      <mat-chip *ngFor="let border of country.borders" color="primary" selected (click)="goToCountry(border.countryCode)">
+        {{ border.commonName }} ({{ border.countryCode }})
+      </mat-chip>
+    </mat-chip-listbox>
+  </mat-card-content>
+  <mat-card-actions class="card-actions">
+    <button matButton="filled" (click)="goToCountry(country.countryCode)">View</button>
+  </mat-card-actions>
+</mat-card>

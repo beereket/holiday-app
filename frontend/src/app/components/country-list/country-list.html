@@ -1,0 +1,5 @@
+<div class="country-list" *ngIf="countries">
+  <div class="country-cards-container" *ngFor="let country of countries">
+    <app-country-card [countryCode]="country.countryCode"></app-country-card>
+  </div>
+</div>

@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {Country} from '../../services/country';
 import {Router} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {CountryCard} from '../country-card/country-card';
 
 @Component({
   selector: 'app-country-list',
-  imports: [],
+  imports: [
+    CommonModule,
+    CountryCard
+  ],
   templateUrl: './country-list.html',
   styleUrl: './country-list.css'
 })
@@ -17,9 +22,5 @@ export class CountryList {
     this.countryService.getCountries().subscribe( countries => {
       this.countries = countries;
     })
-  }
-
-  goToCountry(code: string) {
-    this.router.navigate(['/country', code]);
   }
 }
