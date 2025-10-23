@@ -1,0 +1,17 @@
+.country-header-card {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 16px;
+  border-radius: 16px;
+}
+
+mat-card-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+mat-card-subtitle {
+  font-size: 1rem;
+  color: #555;
+}
+

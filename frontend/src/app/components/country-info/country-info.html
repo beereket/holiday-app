@@ -1,1 +1,45 @@
-COUNTRY INFO
+<div class="country-info">
+  <mat-card class="country-header-card" *ngIf="country?.commonName">
+    <mat-card-header>
+      <img mat-card-avatar
+           [src]="'https://flagcdn.com/w160/' + (country.countryCode | lowercase) + '.png'"
+           alt="{{ country.commonName }}">
+      <mat-card-title>{{ country.commonName }}</mat-card-title>
+      <mat-card-subtitle>{{ country.officialName }}</mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+
+  <div class="country-info-content">
+    <table mat-table [dataSource]="holidays" class="mat-elevation-z8 holiday-table">
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let holiday">{{ holiday.date }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="localName">
+        <th mat-header-cell *matHeaderCellDef>Local Name</th>
+        <td mat-cell *matCellDef="let holiday">{{ holiday.localName }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let holiday">{{ holiday.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="types">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let holiday">
+          <mat-chip-listbox>
+            <mat-chip *ngFor="let t of holiday.types" color="primary">{{ t }}</mat-chip>
+          </mat-chip-listbox>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+</div>

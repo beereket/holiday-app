@@ -6,10 +6,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule} from '@angular/material/table';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-country-info',
-  imports: [CommonModule, MatCardModule, MatChipsModule, MatIconModule, MatDividerModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatTableModule,
+  ],
   templateUrl: './country-info.html',
   styleUrl: './country-info.css'
 })
@@ -17,6 +31,7 @@ export class CountryInfo {
   country: any = {};
   holidays: any[] = [];
   year: number = 2025;
+  displayedColumns: string[] = ['date', 'localName', 'name', 'types'];
 
   constructor(private route: ActivatedRoute, private router: Router, private countryService: Country) {}
 
@@ -30,6 +45,7 @@ export class CountryInfo {
       this.holidays = holidays;
     })
   }
+
 
   goToCountry(code: string) {
     this.router.navigate(['/country', code]);
