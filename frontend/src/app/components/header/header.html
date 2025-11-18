@@ -6,7 +6,13 @@
   <button mat-button routerLink="/">Home</button>
   <button mat-button routerLink="/countries">Countries</button>
 
-  <button mat-button (click)="openGithub()">
-    Github
-  </button>
+  <ng-container *ngIf="user$ | async as user; else loggedOut">
+    <a mat-button routerLink="/profile">Profile</a>
+    <button mat-button (click)="logout()">Logout</button>
+  </ng-container>
+
+  <ng-template #loggedOut>
+    <a mat-button routerLink="/login">Login</a>
+    <a mat-button routerLink="/signup">Signup</a>
+  </ng-template>
 </mat-toolbar>
