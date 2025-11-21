@@ -1,0 +1,27 @@
+<mat-card class="auth-card">
+  <h2>Sign Up</h2>
+
+  <form (ngSubmit)="signup()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="email" name="email" type="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="password" name="password" type="password" required>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="full-width" [disabled]="loading">
+      Create Account
+    </button>
+
+    <div class="center" *ngIf="loading">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    </div>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </form>
+
+  <a mat-button routerLink="/login">Already have an account? Login</a>
+</mat-card>

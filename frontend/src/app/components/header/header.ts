@@ -3,6 +3,9 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {RouterModule} from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth';
+
 
 @Component({
   selector: 'app-header',
@@ -16,7 +19,13 @@ import {RouterModule} from '@angular/router';
   styleUrl: './header.css'
 })
 export class Header {
-  openGithub() {
-     window.open('https://github.com/beereket/holiday-app', '_blank');
-   }
+  user$;
+
+  constructor(private auth: AuthService, private router: Router) {
+    this.user$ = this.auth.currentUser$;
+  }
+
+  logout() {
+    this.auth.logout().subscribe(() => this.router.navigate(['/login']));
+  }
 }
