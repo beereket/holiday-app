@@ -3,6 +3,6 @@ import { appConfig } from './app/app.config';
 import {registerLicense} from '@syncfusion/ej2-base'
 import { App } from './app/app';
 
-registerLicense('Ngo9BigBOggjGyl/Vkd+XU9FcVRDXHxLfkx0RWFcb1x6dFxMZFRBJAtUQF1hTH9TdEdiXX1cc3RWRWdcWkd3');
+registerLicense('Ngo9BigBOggjGyl/Vkd+XU9FcVRDX3xLe0x0RWFcb1p6d1BMYVhBNQtUQF1hTH9SdEBjXXxbdHRTRWFaWkd3');
 bootstrapApplication(App, appConfig)
   .catch((err) => console.error(err));

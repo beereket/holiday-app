@@ -8,8 +8,19 @@
   </mat-form-field>
 </div>
 
-<div class="country-list" *ngIf="filteredCountries$ | async as countries">
-  <div class="country-cards-container" *ngFor="let country of countries">
-    <app-country-card [countryCode]="country.countryCode"></app-country-card>
+<div *ngIf="loading$ | async" class="loading-container">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>Loading countries...</p>
+</div>
+
+<div *ngIf="error$ | async as error" class="error-container">
+  <p class="error-message">Error: {{ error }}</p>
+</div>
+
+<div  *ngIf="(loading$ | async) === false && !(error$ | async)">
+  <div class="country-list" *ngIf="filteredCountries$ | async as countries">
+    <div class="country-cards-container" *ngFor="let country of countries">
+      <app-country-card [countryCode]="country.countryCode"></app-country-card>
+    </div>
   </div>
 </div>

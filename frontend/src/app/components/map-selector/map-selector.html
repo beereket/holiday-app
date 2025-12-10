@@ -1,10 +1,20 @@
-<ejs-maps id="map"
+<div *ngIf="loading$ | async" class="loading-container">
+  <mat-spinner diameter="50"></mat-spinner>
+  <p>Loading countries...</p>
+</div>
+
+<div *ngIf="error$ | async as error" class="error-container">
+  <p class="error-message">Error: {{ error }}</p>
+</div>
+
+<ejs-maps *ngIf="(loading$ | async) === false && !(error$ | async)"
+          id="map"
           [layers]="layerOptions"
           theme="FluentDark"
           (shapeSelected)="onShapeSelected($event)"
 ></ejs-maps>
 
-<div class="country-table">
+<div class="country-table" *ngIf="(loading$ | async) === false && !(error$ | async)">
   <table mat-table [dataSource]="countries" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
