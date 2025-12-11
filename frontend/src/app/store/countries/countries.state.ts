@@ -7,7 +7,7 @@ export interface CountriesState {
 }
 
 export const initialCountriesState: CountriesState = {
-  countries: [],
-  loading: false,
-  error: null
+    countries: [],
+    loading: false,
+    error: null
 };

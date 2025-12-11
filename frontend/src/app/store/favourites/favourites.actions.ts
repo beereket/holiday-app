@@ -2,6 +2,9 @@ import { createAction, props } from '@ngrx/store';
 
 export const loadFavourites = createAction('[Favourites] Load Local');
 
+// Internal noop action (used to avoid overwriting server state when user is logged in)
+export const favouritesNoop = createAction('[Favourites] Noop');
+
 export const loadFavouritesSuccess = createAction(
   '[Favourites] Load Local Success',
   props<{ favourites: string[] }>()

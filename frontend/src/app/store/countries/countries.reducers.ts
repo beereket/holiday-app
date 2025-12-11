@@ -9,19 +9,19 @@ import { initialCountriesState } from './countries.state';
 export const countriesReducer = createReducer(
   initialCountriesState,
 
-  on(loadCountries, state => ({
-    ...state,
-    loading: true,
-    error: null
-  })),
+    on(loadCountries, state => ({
+        ...state,
+        loading: true,
+        error: null
+    })),
 
-  on(loadCountriesSuccess, (state, { countries }) => ({
-    ...state,
-    loading: false,
-    countries
-  })),
-
-  on(loadCountriesFailure, (state, { error }) => ({
+    on(loadCountriesSuccess, (state, { countries }) => ({
+        ...state,
+        loading: false,
+        countries
+    })),
+    
+     on(loadCountriesFailure, (state, { error }) => ({
     ...state,
     loading: false,
     error

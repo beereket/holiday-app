@@ -1,12 +1,85 @@
-<mat-card class="auth-card">
+<mat-card class="auth-card profile-card">
   <h2>Your Profile</h2>
 
   <ng-container *ngIf="user$ | async as user">
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>UID:</strong> {{ user.uid }}</p>
+    <div class="profile-content">
+      <!-- Profile Picture Section -->
+      <div class="profile-picture-section">
+        <div class="profile-picture-container">
+          <img 
+            [src]="(profile$ | async)?.avatarBase64 || 'https://via.placeholder.com/150?text=No+Photo'" 
+            alt="Profile Picture"
+            class="profile-picture"
+            [class.has-photo]="!!(profile$ | async)?.avatarBase64">
+          <div *ngIf="!(profile$ | async)?.avatarBase64" class="no-photo-icon">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+        </div>
 
-    <button mat-raised-button color="warn" (click)="logout()">
-      Logout
-    </button>
+        <!-- Upload Section -->
+        <div class="upload-section">
+          <input 
+            type="file" 
+            #fileInput 
+            accept="image/*" 
+            (change)="onFileSelected($event)"
+            style="display: none">
+          
+          <div *ngIf="previewUrl" class="preview-section">
+            <img [src]="previewUrl" alt="Preview" class="preview-image">
+            <div class="preview-actions">
+              <button 
+                mat-raised-button 
+                color="primary" 
+                (click)="uploadProfilePicture()"
+                [disabled]="uploading">
+                <mat-icon *ngIf="uploading">hourglass_empty</mat-icon>
+                <mat-icon *ngIf="!uploading">upload</mat-icon>
+                {{ uploading ? 'Uploading...' : 'Upload' }}
+              </button>
+              <button 
+                mat-button 
+                (click)="cancelUpload()"
+                [disabled]="uploading">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="!previewUrl" class="upload-actions">
+            <button 
+              mat-raised-button 
+              color="primary" 
+              (click)="fileInput.click()"
+              [disabled]="uploading">
+              <mat-icon>add_photo_alternate</mat-icon>
+              {{ (profile$ | async)?.avatarBase64 ? 'Change Picture' : 'Upload Picture' }}
+            </button>
+            <button 
+              *ngIf="(profile$ | async)?.avatarBase64" 
+              mat-button 
+              color="warn" 
+              (click)="removeProfilePicture()"
+              [disabled]="uploading">
+              <mat-icon>delete</mat-icon>
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-info-section">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>UID:</strong> {{ user.uid }}</p>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <button mat-raised-button color="warn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </div>
   </ng-container>
 </mat-card>
+  

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { selectFavourites } from './favourites.selector';
 import { map, switchMap, tap, withLatestFrom, filter, take, mergeMap, catchError } from 'rxjs/operators';
 import { Auth, authState } from '@angular/fire/auth';
-import { Firestore, collection, collectionData, doc, writeBatch } from '@angular/fire/firestore';
+import { Firestore, collection, doc, writeBatch, getDocs } from '@angular/fire/firestore';
 import { of, from } from 'rxjs';
 
 @Injectable()
@@ -21,6 +21,12 @@ export class FavouritesEffects {
     this.actions$.pipe(
       ofType(FavActions.loadFavourites),
       map(() => {
+        // If user is logged in, don't overwrite store with localStorage data.
+        // Server sync happens via authState$ (loadFromServer$) and/or on-demand refresh effect below.
+        if (this.auth.currentUser) {
+          return FavActions.favouritesNoop();
+        }
+
         try {
           const data = localStorage.getItem('favs');
           const favourites = data ? JSON.parse(data) : [];
@@ -35,6 +41,34 @@ export class FavouritesEffects {
           const errorMessage = error instanceof Error ? error.message : 'Failed to load favourites from localStorage';
           return FavActions.loadFavouritesFailure({ error: errorMessage });
         }
+      })
+    )
+  );
+
+  /**
+   * When a page dispatches loadFavourites() and the user is logged in,
+   * refresh favourites from Firestore immediately (no reload needed).
+   */
+  refreshFromServerOnLoad$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(FavActions.loadFavourites),
+      switchMap(() => this.authState$.pipe(take(1))),
+      filter(user => !!user),
+      switchMap(user => {
+        const colRef = collection(this.afs, `users/${user!.uid}/favourites`);
+        return from(getDocs(colRef)).pipe(
+          map(snapshot =>
+            FavActions.syncFavouritesFromServer({
+              favourites: snapshot.docs
+                .map(docSnap => docSnap.id)
+                .filter((id): id is string => typeof id === 'string')
+            })
+          ),
+          catchError(error => {
+            const errorMessage = error?.message || 'Failed to load favourites from server';
+            return of(FavActions.syncFavouritesFromServerFailure({ error: errorMessage }));
+          })
+        );
       })
     )
   );
@@ -59,11 +93,13 @@ export class FavouritesEffects {
     this.authState$.pipe(
       filter(user => !!user),
       switchMap(user => {
-        const col = collection(this.afs, `users/${user!.uid}/favourites`);
-        return collectionData(col, { idField: 'id' }).pipe(
-          map((docs: any[]) =>
+        const colRef = collection(this.afs, `users/${user!.uid}/favourites`);
+        return from(getDocs(colRef)).pipe(
+          map(snapshot =>
             FavActions.syncFavouritesFromServer({
-              favourites: docs.map((d: any) => d.id).filter((id: any): id is string => typeof id === 'string')
+              favourites: snapshot.docs
+                .map(docSnap => docSnap.id)
+                .filter((id): id is string => typeof id === 'string')
             })
           ),
           catchError(error => {
