@@ -4,12 +4,13 @@ import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { environment } from './environment';
 import { reducers } from './store';
 import { CountriesEffects } from './store/countries/countries.effects';
-import { AuthEffects } from './store/auth/auth.effects';
+import { FavouritesEffects } from './store/favourites/favourites.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,9 +21,10 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     
     provideStore(reducers),
-    provideEffects([AuthEffects, CountriesEffects]),
+    provideEffects([CountriesEffects, FavouritesEffects]),
     
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ]
 };

@@ -5,6 +5,9 @@
 
   <button mat-button routerLink="/">Home</button>
   <button mat-button routerLink="/countries">Countries</button>
+  <button mat-button routerLink="/favourites">
+    Favourites
+  </button>
 
   <ng-container *ngIf="user$ | async as user; else loggedOut">
     <a mat-button routerLink="/profile">Profile</a>

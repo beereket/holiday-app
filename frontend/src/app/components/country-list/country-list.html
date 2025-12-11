@@ -20,7 +20,17 @@
 <div  *ngIf="(loading$ | async) === false && !(error$ | async)">
   <div class="country-list" *ngIf="filteredCountries$ | async as countries">
     <div class="country-cards-container" *ngFor="let country of countries">
-      <app-country-card [countryCode]="country.countryCode"></app-country-card>
+      <div class="country-card-wrapper">
+        <app-country-card [countryCode]="country.countryCode"></app-country-card>
+        <button 
+          mat-icon-button 
+          class="favourite-button"
+          [class.favourite-active]="isFavourite$(country.countryCode) | async"
+          (click)="toggleFavourite(country.countryCode)"
+          [attr.aria-label]="(isFavourite$(country.countryCode) | async) ? 'Remove from favourites' : 'Add to favourites'">
+          <mat-icon>{{ (isFavourite$(country.countryCode) | async) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 </div>

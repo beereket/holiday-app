@@ -7,6 +7,15 @@
       <mat-card-title>{{ country.commonName }}</mat-card-title>
       <mat-card-subtitle>{{ country.officialName }}</mat-card-subtitle>
     </mat-card-header>
+    <mat-card-actions>
+      <button 
+        mat-raised-button 
+        [color]="(isFavourite$ | async) ? 'warn' : 'primary'"
+        (click)="toggleFavourite()">
+        <mat-icon>{{ (isFavourite$ | async) ? 'favorite' : 'favorite_border' }}</mat-icon>
+        {{ (isFavourite$ | async) ? 'Remove from Favourites' : 'Add to Favourites' }}
+      </button>
+    </mat-card-actions>
   </mat-card>
 
 

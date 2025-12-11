@@ -1,9 +1,9 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { AppState } from './app.state';
-import { authReducer } from './auth/auth.reducer';
 import { countriesReducer } from './countries/countries.reducers';
+import { favouritesReducer } from './favourites/favourites.reducer';
 
 export const reducers: ActionReducerMap<AppState> = {
-  auth: authReducer,
-  countries: countriesReducer
+  countries: countriesReducer,
+  favourites: favouritesReducer
 };

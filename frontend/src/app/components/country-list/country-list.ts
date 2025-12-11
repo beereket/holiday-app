@@ -6,12 +6,16 @@ import { CountryCard } from '../country-card/country-card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, map, startWith } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, startWith, take } from 'rxjs/operators';
 import { Observable, combineLatest } from 'rxjs';
 import { AppState } from '../../store/app.state';
 import { loadCountries } from '../../store/countries/countries.actions';
 import { selectCountries, selectLoading, selectError } from '../../store/countries/countries.selectors';
+import { addFavourite, removeFavourite, loadFavourites } from '../../store/favourites/favourites.actions';
+import { isFavourite } from '../../store/favourites/favourites.selector';
 import { Country } from '../../store/countries/countries.models';
 
 @Component({
@@ -22,6 +26,8 @@ import { Country } from '../../store/countries/countries.models';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatButtonModule,
+    MatIconModule,
     ReactiveFormsModule
   ],
   templateUrl: './country-list.html',
@@ -40,6 +46,8 @@ export class CountryList implements OnInit {
   ngOnInit() {
     // Dispatch action to load countries if not already loaded
     this.store.dispatch(loadCountries());
+    // Load favourites
+    this.store.dispatch(loadFavourites());
 
     // Create filtered countries observable
     this.filteredCountries$ = combineLatest([
@@ -61,5 +69,19 @@ export class CountryList implements OnInit {
         );
       })
     );
+  }
+
+  toggleFavourite(countryCode: string) {
+    this.isFavourite$(countryCode).pipe(take(1)).subscribe(isFav => {
+      if (isFav) {
+        this.store.dispatch(removeFavourite({ id: countryCode }));
+      } else {
+        this.store.dispatch(addFavourite({ id: countryCode }));
+      }
+    });
+  }
+
+  isFavourite$(countryCode: string): Observable<boolean> {
+    return this.store.select(isFavourite(countryCode));
   }
 }
